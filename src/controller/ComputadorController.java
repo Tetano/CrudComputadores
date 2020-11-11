@@ -16,6 +16,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import model.Computador;
+import dao.ComputadorDAO;
+import dao.DAO;
 import application.Util;
 
 
@@ -30,88 +32,15 @@ public class ComputadorController implements Serializable {
 	List<Computador> listaComputador;
 	int id = 0;
 
-private static Connection getConnection() {
-		
-		// Abre a conexão
-		Connection conn = null;
-		//Tentativa com try p/ executar código
-			
-			try {
-				// 1- Registrar Driver Do PostGre	
-				Class.forName("org.postgresql.Driver");
-				
-				// estabelecendo a conexão com banco de dados/ endereço/nome/senha				
-				conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/lojacomputador", "topicos1", "123456");
-				
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		return conn;
-		
-	}
 
 	public void incluir() {
-		Connection conn = getConnection();
-
-		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO ");
-		sql.append("computador ");
-		sql.append("  (cpf, placa_mae, processador, placa_video, memoria, fonte) ");
-		sql.append("VALUES ");
-		sql.append("  ( ?, ?, ?, ?, ?, ?) ");
-		PreparedStatement stat = null;
-		try {
-			Computador computador = getComputador();
-			stat = conn.prepareStatement(sql.toString());
-			stat.setString(1, computador.getCpf()); // Usa o get para definir o nome
-			//stat.setObject(2, computador.getDataCompra());
-			stat.setString(2, computador.getPlacaMae());
-			stat.setString(3, computador.getPlacaDeVideo());
-			stat.setString(4, computador.getProcessador()); // Usa o get para definir o nome
-			stat.setString(5, computador.getMemoria());
-			stat.setString(6, computador.getFonte());
-			//stat.setString(8, computador.getGabinete());
-			conn.setAutoCommit(false);
-			stat.execute();
-			// efetivando a transacao
-			conn.commit();
-			limpar();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			// cancelando a transacao
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				System.out.println("Erro ao realizar o rollback.");
-				Util.addMessage("Erro ao realizar o rollback.");
-				e1.printStackTrace();
-			}
-		} finally {
-			try {
-				if (!stat.isClosed())
-					stat.close();
-			} catch (SQLException e) {
-				System.out.println("Erro ao fechar o Statement");
-				Util.addMessage("Problema ao fechar conn");
-				e.printStackTrace();
-			}
-
-			try {
-				if (!conn.isClosed())
-					conn.close();
-			} catch (SQLException e) {
-				Util.addMessage("Problema ao fechar statement");
-				System.out.println("Erro a o fechar a conexao com o banco.");
-				e.printStackTrace();
-			}
-		}
-
+		ComputadorDAO dao = new ComputadorDAO();
+		dao.inserir(computador);
+		Util.addMessage("Inclusão realizada com sucesso.");
+		Util.addMessage("Erro ao realizar o rollback.");
+		Util.addMessage("Problema ao fechar conn");
+		Util.addMessage("Problema ao fechar statement");
+		limpar();
 	}
 
 	public void alterar() {
@@ -165,7 +94,7 @@ private static Connection getConnection() {
 	public List<Computador> getListaComputador() {
 		if (listaComputador == null) {
 			listaComputador = new ArrayList<Computador>();
-			Connection conn = getConnection();
+			Connection conn = DAO.getConnection();
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT ");
