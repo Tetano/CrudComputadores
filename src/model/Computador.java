@@ -17,7 +17,7 @@ public class Computador {
 	private String memoria;
 	private String processador;
 	private String fonte;
-	private String gabinete;
+	private Gabinete gabinete;
 
 	
 	
@@ -64,10 +64,10 @@ public class Computador {
 	public void setFonte(String fonte) {
 		this.fonte = fonte;
 	}
-	public String getGabinete() {
+	public Gabinete getGabinete() {
 		return gabinete;
 	}
-	public void setGabinete(String gabinete) {
+	public void setGabinete(Gabinete gabinete) {
 		this.gabinete = gabinete;
 	}
 

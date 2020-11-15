@@ -13,53 +13,85 @@
 	<div class="container">
 		<div class="box">
 			<h:form>
-				<h:messages styleClass="messages" style="font-size: large" />
-				<div class="divtop">
-					<h:inputText value="#{computadorController.computador.placaMae}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="type" value="text" />
-						<f:passThroughAttribute name="placeholder" value="Placa mãe" />
-					</h:inputText>
+				<h:panelGrid columns="2">
+					<h:messages styleClass="messages" style="font-size: large" />
+					<div class="divtop">
 
-					<h:inputText value="#{computadorController.computador.processador}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder" value="Processador" />
-					</h:inputText>
-					
-					<h:inputText value="#{computadorController.computador.cpf}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder"
-							value="CPF: 000.000.000-00" />
-						<f:validateLength maximum="11" minimum="11"></f:validateLength>
-						<f:validateRegex pattern="[0-9]{11}+"></f:validateRegex>
-					</h:inputText>
+						<h:panelGroup>
+							<h:inputText value="#{computadorController.computador.placaMae}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="type" value="text" />
+								<f:passThroughAttribute name="placeholder" value="Placa mãe" />
+							</h:inputText>
+						</h:panelGroup>
 
-					<h:inputText value="#{computadorController.computador.dataCompra}"
-						styleClass="inputkind2">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						<f:passThroughAttribute name="placeholder" value="00/00/0000" />
-					</h:inputText>
+						<h:panelGroup>
+							<h:inputText
+								value="#{computadorController.computador.processador}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="placeholder" value="Processador" />
+							</h:inputText>
+						</h:panelGroup>
 
-					<h:inputText value="#{computadorController.computador.memoria}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder" value="Memória" />
-					</h:inputText>
+						<h:panelGroup>
+							<h:inputText value="#{computadorController.computador.cpf}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="placeholder"
+									value="CPF: 000.000.000-00" />
+								<f:validateLength maximum="11" minimum="11"></f:validateLength>
+								<f:validateRegex pattern="[0-9]{11}+"></f:validateRegex>
+							</h:inputText>
+						</h:panelGroup>
 
-					<h:inputText
-						value="#{computadorController.computador.placaDeVideo}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder" value="Placa de Vídeo" />
-					</h:inputText>
+						<h:panelGroup>
+							<h:inputText
+								value="#{computadorController.computador.dataCompra}"
+								styleClass="inputkind2">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								<f:passThroughAttribute name="placeholder" value="00/00/0000" />
+							</h:inputText>
+						</h:panelGroup>
 
-					<h:inputText value="#{computadorController.computador.fonte}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder" value="Fonte" />
-					</h:inputText>
-				</div>
+						<h:panelGroup>
+							<h:inputText value="#{computadorController.computador.memoria}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="placeholder" value="Memória" />
+							</h:inputText>
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:inputText
+								value="#{computadorController.computador.placaDeVideo}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="placeholder"
+									value="Placa de Vídeo" />
+							</h:inputText>
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:inputText value="#{computadorController.computador.fonte}"
+								styleClass="inputkind2">
+								<f:passThroughAttribute name="placeholder" value="Fonte" />
+							</h:inputText>
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<h:outputLabel value="Tamanho do gabinete   " />
+							<h:selectOneMenu
+								value="#{computadorController.computador.gabinete}">
+								<f:selectItem itemLabel="Selecione..." />
+								<f:selectItems value="#{computadorController.listaGabinete}"
+									var="objeto" itemLabel="#{objeto.label}" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+
+
+					</div>
+				</h:panelGrid>
 
 				<div class="box2">
 
-					<h:dataTable styleClass="divleft" rows="5"
+					<h:dataTable styleClass="divleft" rows="8"
 						value="#{computadorController.listaComputador}" var="objeto">
 
 						<h:column>
@@ -72,36 +104,36 @@
 
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">ID</h3>
+								<h3 style="color: black">ID</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca" value="#{objeto.id}" />
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">CPF</h3>
+								<h3 style="color: black">CPF</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca" value="#{objeto.cpf}" />
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">Placa Mãe</h3>
+								<h3 style="color: black">Placa Mãe</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca" value="#{objeto.placaMae}" />
 						</h:column>
 
+
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">Processador</h3>
+								<h3 style="color: black">Processador</h3>
 							</f:facet>
-							<h:outputText styleClass="corBranca"
-								value="#{objeto.processador}" />
+							<h:outputText styleClass="black" value="#{objeto.processador}" />
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">Placa De Vídeo</h3>
+								<h3 style="color: black">Placa De Vídeo</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca"
 								value="#{objeto.placaDeVideo}" />
@@ -109,25 +141,24 @@
 
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">Memória</h3>
+								<h3 style="color: black">Memória</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca" value="#{objeto.memoria}" />
 						</h:column>
 
-						<h:column>
-							<f:facet name="header">
-								<h3 style="color: white">DataCompra</h3>
-							</f:facet>
-							<h:outputText styleClass="corBranca" value="#{objeto.dataCompra}">
-								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-							</h:outputText>
 
-						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h3 style="color: white">Fonte</h3>
+								<h3 style="color: black">Fonte</h3>
 							</f:facet>
 							<h:outputText styleClass="corBranca" value="#{objeto.fonte} Wats" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h3 style="color: black">Gabinete</h3>
+							</f:facet>
+							<h:outputLabel value="#{objeto.gabinete.label}" />
 						</h:column>
 
 					</h:dataTable>
