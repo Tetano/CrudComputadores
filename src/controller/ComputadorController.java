@@ -17,8 +17,10 @@ import javax.inject.Named;
 
 import model.Computador;
 import model.Gabinete;
+import model.Usuario;
 import dao.ComputadorDAO;
 import dao.DAO;
+import dao.UsuarioDAO;
 import application.Util;
 
 
@@ -36,24 +38,29 @@ public class ComputadorController implements Serializable {
 
 	public void incluir() {
 		ComputadorDAO dao = new ComputadorDAO();
-		Util.addMessage(dao.inserir(computador));
-		
-
-
-
-
+		try {
+			dao.inserir(computador);
+		} catch(Exception e) {
+			Util.addMessage("Não foi possível fazer a inclusão");
+			e.printStackTrace();
+		}
 		limpar();
 	}
 
 	public void alterar() {
-		int index = getListaComputador().indexOf(getComputador());
-		getListaComputador().set(index, getComputador());
-		return;
+		ComputadorDAO dao = new ComputadorDAO();
+		try {
+			dao.alterar(getComputador());
+			Util.addMessage("Alteração Realizada com sucesso");
+			limpar();
+		} catch (Exception e) {
+			Util.addMessage("Não é possivel fazer uma alteração.");
+			e.printStackTrace();
+		}
 	}
 	
 	public void editar(Computador pc) {
 		setComputador(pc);
-		Util.addMessage("Item "+pc.getId().toString() + " Selecionado");
 	}
 
 	public void excluir() {
@@ -62,19 +69,7 @@ public class ComputadorController implements Serializable {
 		limpar();
 		return;
 	}
-	
-	public void ValidarCpf() {
-		if(computador.getCpf().isBlank()||computador.getCpf().isEmpty()) {
-			return;
-		}
-		if(computador.getCpf().length()<11) {
-			Util.addMessage("Verifique se o CPF possui 11 digitos, digite sem . ou - apenas números");
-			return;
-		}
 		
-	}
-	
-	
 	
 	public void limpar() {
 		computador = null;

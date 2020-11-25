@@ -10,9 +10,9 @@ import model.Computador;
 public interface DAO<T> {
 	// É utilizada para gerar implementações genêricas focando na reutilização de código.
 	
-	public String inserir(T obj);
-	public void alterar(T obj);
-	public void excluir(Integer id);
+	public void inserir(T obj) throws Exception;
+	public void alterar(T obj) throws Exception;
+	public void excluir(Integer id) throws Exception;
 	public List<T> obterTodos() throws Exception;
 	
 public static Connection getConnection() {
