@@ -62,12 +62,23 @@ public class ComputadorController implements Serializable {
 	public void editar(Computador pc) {
 		setComputador(pc);
 	}
-
+	
 	public void excluir() {
-		int index = getListaComputador().indexOf(getComputador());
-		getListaComputador().remove(index);
-		limpar();
-		return;
+		excluir(getComputador());
+	}
+
+	public void excluir(Computador computador) {
+		
+		
+		ComputadorDAO dao = new ComputadorDAO();
+		try {
+			dao.excluir(getComputador().getId());
+			Util.addMessage("Alteração Realizada com sucesso");
+			limpar();
+		} catch (Exception e) {
+			Util.addMessage("Não é possivel fazer uma exclusão.");
+			e.printStackTrace();
+		}
 	}
 		
 	

@@ -173,8 +173,61 @@ Connection conn = DAO.getConnection();
 	}
 
 	@Override
-	public void excluir(Integer id) {
+	public void excluir(Integer id) throws Exception {
 		// TODO Auto-generated method stub
+Connection conn = DAO.getConnection();
+		
+		Exception exception = null;
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE FROM computador WHERE id = ?");
+		
+		
+		PreparedStatement stat = null;
+		
+		try {
+			conn.setAutoCommit(false);
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1, id);
+
+			stat.execute();
+			conn.commit();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// cancelando a transacao
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.println("Erro ao realizar o rollback.");
+				e1.printStackTrace();
+
+			}
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				e.printStackTrace();
+
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+
+			}
+		}
+		if(exception != null)
+			throw exception;
+
+	
+
 		
 	}
 
