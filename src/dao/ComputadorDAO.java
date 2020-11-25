@@ -34,7 +34,7 @@ public class ComputadorDAO implements DAO<Computador> {
 		
 		
 		try {
-
+			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
 			stat.setString(1, obj.getCpf()); // Usa o get para definir o nome
 			stat.setString(2, obj.getPlacaMae());
@@ -48,10 +48,7 @@ public class ComputadorDAO implements DAO<Computador> {
 			stat.setInt(7, obj.getGabinete().getId());
 			
 			//Convertendo um Obj LocalDate para SQLDate
-			if(obj.getDataCompra() != null) 
-				stat.setDate(8, Date.valueOf(obj.getDataCompra()));
-			 else 
-				stat.setDate(8, null);
+			stat.setDate(8, obj.getDataCompra() == null ? null: Date.valueOf(obj.getDataCompra()));
 			
 
 			
@@ -128,12 +125,8 @@ Connection conn = DAO.getConnection();
 				return;
 			}
 			stat.setInt(7, obj.getGabinete().getId());
-
-			//Convertendo um Obj LocalDate para SQLDate
-			if(obj.getDataCompra() != null) 
-				stat.setDate(8, Date.valueOf(obj.getDataCompra()));
-			 else 
-				stat.setDate(8, null);
+			
+			stat.setDate(8, obj.getDataCompra() == null ? null: Date.valueOf(obj.getDataCompra()));
 			
 			stat.setInt(9, obj.getId());
 
