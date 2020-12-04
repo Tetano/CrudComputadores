@@ -5,15 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.Computador;
-
 public interface DAO<T> {
 	// É utilizada para gerar implementações genêricas focando na reutilização de código.
 	
 	public void inserir(T obj) throws Exception;
 	public void alterar(T obj) throws Exception;
-	public void excluir(Integer id) throws Exception;
+	public void excluir(T obj) throws Exception;
 	public List<T> obterTodos() throws Exception;
+	public T obterUm(T obj) throws Exception;
 	
 public static Connection getConnection() {
 		
@@ -39,5 +38,6 @@ public static Connection getConnection() {
 		return conn;
 		
 	}
+void excluir(Integer id);
 	
 }

@@ -12,6 +12,7 @@ import application.Util;
 import model.Computador;
 import model.Gabinete;
 
+
 public class ComputadorDAO implements DAO<Computador> {
 	// Para implementar o DAO genêrico utilize implements DAO<ClasseDesejada>
 	
@@ -19,7 +20,7 @@ public class ComputadorDAO implements DAO<Computador> {
 // A ideia do dao é organziar e separar a camada de modelo do controlador
 	// é preferencialmente feita para reutilização.
 	@Override
-	public void inserir(Computador obj) throws Exception {
+	public void inserir(Computador obj) throws Exception { // Ainda estou inserindo computador
 		Connection conn = DAO.getConnection();
 		
 		Exception exception = null;
@@ -173,7 +174,7 @@ Connection conn = DAO.getConnection();
 	}
 
 	@Override
-	public void excluir(Integer id) throws Exception {
+	public void excluir(Computador obj) throws Exception {
 		// TODO Auto-generated method stub
 Connection conn = DAO.getConnection();
 		
@@ -188,7 +189,7 @@ Connection conn = DAO.getConnection();
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
-			stat.setInt(1, id);
+			stat.setInt(1, obj.getId());
 
 			stat.execute();
 			conn.commit();
@@ -234,11 +235,13 @@ Connection conn = DAO.getConnection();
 	@Override
 	public List<Computador> obterTodos() throws Exception {
 		Exception exception = null;
-		List<Computador> listaComputador = new ArrayList<Computador>();
 		Connection conn = DAO.getConnection();
+		List<Computador> listaComputador = new ArrayList<Computador>();
+	
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
+		//sql.append("  c.*, "); -> Uso do * pode ser viável quando não há necessidade de retornar um elemento em específico.
 		sql.append("  c.id, ");
 		sql.append(" c.gabinete, ");
 		sql.append(" c.cpf, ");
@@ -304,6 +307,91 @@ Connection conn = DAO.getConnection();
 		return listaComputador;
 	}
 
+	@Override
+	public Computador obterUm(Computador obj) throws Exception {
+		// TODO Auto-generated method stub
+		Exception exception = null;
+		Connection conn = DAO.getConnection();
+
+		Computador computador = null;
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		//sql.append("  c.*, "); -> Uso do * pode ser viável quando não há necessidade de retornar um elemento em específico.
+		sql.append("  c.id, ");
+		sql.append(" c.gabinete, ");
+		sql.append(" c.cpf, ");
+		sql.append(" c.placa_mae, ");
+		sql.append(" c.processador, ");
+		sql.append(" c.placa_video, ");
+		sql.append(" c.memoria, ");
+		sql.append(" c.fonte, ");
+		sql.append(" c.data_compra ");
+		sql.append("FROM ");
+		sql.append("  computador c ");
+		sql.append("WHERE c.id = ? ");
+		PreparedStatement stat = null;
+		try {
+			
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1,  obj.getId());
+			
+			ResultSet rs = stat.executeQuery();
+			
+			if(rs.next()) {
+
+				computador.setId(rs.getInt("id"));
+				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete"))); 				
+				computador.setCpf(rs.getString("cpf"));
+				computador.setProcessador(rs.getString("processador"));
+				computador.setPlacaMae(rs.getString("placa_mae"));
+				computador.setPlacaDeVideo(rs.getString("placa_video"));
+				computador.setMemoria(rs.getString("memoria"));
+				computador.setFonte(rs.getString("fonte"));
+				Date data = rs.getDate("data_compra");
+				computador.setDataCompra(data == null ? null : data.toLocalDate());
+				 
+		
+			}
+			
+		} catch (SQLException e) {
+			Util.addMessage("Não foi possível buscar os dados");
+			e.printStackTrace();
+			exception = new Exception("Erro ao executar um sql em computador DAO");
+			// cancelando a transacao
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				Util.addMessage("Problema ao fechar conn");
+				e.printStackTrace();
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				Util.addMessage("Problema ao fechar statement");
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+			}
+		}
+		if(exception != null)
+			throw exception;
+		return computador;
+	}
+
+	@Override
+	public void excluir(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+	
 
 
 

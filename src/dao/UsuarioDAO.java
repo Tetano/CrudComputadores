@@ -155,4 +155,16 @@ public class UsuarioDAO implements DAO<Usuario> {
 		return null;
 	}
 
+	@Override
+	public void excluir(Usuario obj) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Usuario obterUm(Usuario obj) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
