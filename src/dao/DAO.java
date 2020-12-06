@@ -26,7 +26,7 @@ public static Connection getConnection() {
 				
 				// estabelecendo a conexão com banco de dados/ endereço/nome/senha				
 				conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/lojacomputador", "topicos1", "123456");
-				
+				conn.setAutoCommit(false);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -38,6 +38,6 @@ public static Connection getConnection() {
 		return conn;
 		
 	}
-void excluir(Integer id);
+
 	
 }

@@ -138,21 +138,9 @@ public class UsuarioDAO implements DAO<Usuario> {
 	}
 
 	@Override
-	public void alterar(Usuario obj) {
+	public void alterar(Usuario obj) throws Exception {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void excluir(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Usuario> obterTodos() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
@@ -162,9 +150,16 @@ public class UsuarioDAO implements DAO<Usuario> {
 	}
 
 	@Override
+	public List<Usuario> obterTodos() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Usuario obterUm(Usuario obj) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 }

@@ -47,12 +47,10 @@ public abstract class Controller<T> {
 		try {
 			setEntity(dao.obterUm(entity));
 		} catch (Exception e) {
-			Util.addMessage("Problema Ao Editar");
-			// TODO Auto-generated catch block
+			Util.addMessage("Problema ao editar.");
 			e.printStackTrace();
 		}
 	}
-	
 	
 	public void alterar() {
 		try {

@@ -309,12 +309,11 @@ Connection conn = DAO.getConnection();
 
 	@Override
 	public Computador obterUm(Computador obj) throws Exception {
-		// TODO Auto-generated method stub
 		Exception exception = null;
 		Connection conn = DAO.getConnection();
-
-		Computador computador = null;
 		
+		Computador computador = null;
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
 		//sql.append("  c.*, "); -> Uso do * pode ser viável quando não há necessidade de retornar um elemento em específico.
@@ -329,17 +328,18 @@ Connection conn = DAO.getConnection();
 		sql.append(" c.data_compra ");
 		sql.append("FROM ");
 		sql.append("  computador c ");
-		sql.append("WHERE c.id = ? ");
+		sql.append("ORDER BY c.id ");
+		
 		PreparedStatement stat = null;
 		try {
-			
-			stat = conn.prepareStatement(sql.toString());
-			stat.setInt(1,  obj.getId());
-			
-			ResultSet rs = stat.executeQuery();
-			
-			if(rs.next()) {
 
+			stat = conn.prepareStatement(sql.toString());
+
+
+			ResultSet rs = stat.executeQuery();
+
+			if (rs.next()) {
+				computador = new Computador();
 				computador.setId(rs.getInt("id"));
 				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete"))); 				
 				computador.setCpf(rs.getString("cpf"));
@@ -350,22 +350,18 @@ Connection conn = DAO.getConnection();
 				computador.setFonte(rs.getString("fonte"));
 				Date data = rs.getDate("data_compra");
 				computador.setDataCompra(data == null ? null : data.toLocalDate());
-				 
-		
 			}
-			
+
 		} catch (SQLException e) {
-			Util.addMessage("Não foi possível buscar os dados");
+			Util.addMessage("Não foi possivel buscar os dados do Computador.");
 			e.printStackTrace();
-			exception = new Exception("Erro ao executar um sql em computador DAO");
-			// cancelando a transacao
+			exception = new Exception("Erro ao executar um sql em ComputadorDAO.");
 		} finally {
 			try {
 				if (!stat.isClosed())
 					stat.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar o Statement");
-				Util.addMessage("Problema ao fechar conn");
 				e.printStackTrace();
 			}
 
@@ -373,25 +369,13 @@ Connection conn = DAO.getConnection();
 				if (!conn.isClosed())
 					conn.close();
 			} catch (SQLException e) {
-				Util.addMessage("Problema ao fechar statement");
 				System.out.println("Erro a o fechar a conexao com o banco.");
 				e.printStackTrace();
 			}
 		}
-		if(exception != null)
-			throw exception;
+
 		return computador;
 	}
-
-	@Override
-	public void excluir(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-	
 
 
 

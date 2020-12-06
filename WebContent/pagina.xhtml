@@ -18,7 +18,7 @@
 
 								<h:panelGroup>
 									<h:inputText
-										value="#{computadorController.computador.placaMae}"
+										value="#{computadorController.entity.placaMae}"
 										styleClass="inputkind2">
 										<f:passThroughAttribute name="type" value="text" />
 										<f:passThroughAttribute name="placeholder" value="Placa mãe" />
@@ -27,14 +27,14 @@
 
 								<h:panelGroup>
 									<h:inputText
-										value="#{computadorController.computador.processador}"
+										value="#{computadorController.entity.processador}"
 										styleClass="inputkind2">
 										<f:passThroughAttribute name="placeholder" value="Processador" />
 									</h:inputText>
 								</h:panelGroup>
 
 								<h:panelGroup>
-									<h:inputText value="#{computadorController.computador.cpf}"
+									<h:inputText value="#{computadorController.entity.cpf}"
 										styleClass="inputkind2">
 														<f:passThroughAttribute name="placeholder"
 											value="CPF: 000.000.000-00" />
@@ -48,7 +48,7 @@
 
 								<h:panelGroup>
 									<h:inputText
-										value="#{computadorController.computador.dataCompra}"
+										value="#{computadorController.entity.dataCompra}"
 										styleClass="inputkind2">
 										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 										<f:passThroughAttribute name="placeholder" value="00/00/0000" />
@@ -56,7 +56,7 @@
 								</h:panelGroup>
 
 								<h:panelGroup>
-									<h:inputText value="#{computadorController.computador.memoria}"
+									<h:inputText value="#{computadorController.entity.memoria}"
 										styleClass="inputkind2">
 										<f:passThroughAttribute name="placeholder" value="Memória" />
 									</h:inputText>
@@ -64,7 +64,7 @@
 
 								<h:panelGroup>
 									<h:inputText
-										value="#{computadorController.computador.placaDeVideo}"
+										value="#{computadorController.entity.placaDeVideo}"
 										styleClass="inputkind2">
 										<f:passThroughAttribute name="placeholder"
 											value="Placa de Vídeo" />
@@ -72,7 +72,7 @@
 								</h:panelGroup>
 
 								<h:panelGroup>
-									<h:inputText value="#{computadorController.computador.fonte}"
+									<h:inputText value="#{computadorController.entity.fonte}"
 										styleClass="inputkind2">
 										<f:passThroughAttribute name="placeholder" value="Fonte" />
 									</h:inputText>
@@ -81,7 +81,7 @@
 								<h:panelGroup>
 									<h:outputLabel value="Tamanho do gabinete   " />
 									<h:selectOneMenu
-										value="#{computadorController.computador.gabinete}">
+										value="#{computadorController.entity.gabinete}">
 										<f:selectItem itemLabel="Selecione..." />
 										<f:selectItems value="#{computadorController.listaGabinete}"
 											var="objeto" itemLabel="#{objeto.label}" />
@@ -95,14 +95,14 @@
 						<div class="box2">
 
 							<h:dataTable styleClass="divleft" rows="8"
-								value="#{computadorController.listaComputador}" var="objeto">
+								value="#{computadorController.listaEntity}" var="objeto">
 
 								<h:column>
 									<f:facet name="header">
 										<h3 style="color: white">Editor</h3>
 									</f:facet>
 									<h:commandLink styleClass="comandLink" value="Selecionar"
-										actionListener="#{computadorController.editar(objeto)}"></h:commandLink>
+										actionListener="#{computadorController.editar(obj)}"></h:commandLink>
 								</h:column>
 
 								<h:column>
@@ -182,19 +182,19 @@
 								<h:commandButton style="background:#FFF" styleClass="item"
 									value="Inserir"
 									actionListener="#{computadorController.incluir()}"
-									disabled="#{computadorController.computador.id != null}"></h:commandButton>
+									disabled="#{computadorController.entity.id != null}"></h:commandButton>
 								<h:commandButton style="background:#FFF" styleClass="item"
 									value="Alterar"
 									actionListener="#{computadorController.alterar()}"
-									disabled="#{computadorController.computador.id == null}"></h:commandButton>
+									disabled="#{computadorController.entity.id == null}"></h:commandButton>
 								<h:commandButton style="background:#FFF" styleClass="item"
 									value="Excluir"
 									actionListener="#{computadorController.excluir()}"
-									disabled="#{computadorController.computador.id == null}"></h:commandButton>
+									disabled="#{computadorController.entity.id == null}"></h:commandButton>
 								<h:commandButton style="background:#FFF" styleClass="item"
 									value="Limpar"
 									actionListener="#{computadorController.limpar()}"
-									disabled="#{computadorController.computador.id == null}"></h:commandButton>
+									disabled="#{computadorController.entity.id == null}"></h:commandButton>
 							</section>
 						</div>
 					</h:form>
