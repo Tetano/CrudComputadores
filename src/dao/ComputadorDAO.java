@@ -10,7 +10,7 @@ import java.util.List;
 
 import application.Util;
 import model.Computador;
-import model.Gabinete;
+import submodelHardware.Gabinete;
 
 
 public class ComputadorDAO implements DAO<Computador> {

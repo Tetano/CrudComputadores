@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 
+import submodelHardware.Gabinete;
+
 public class Computador {
 	public LocalDate getDataCompra() {
 		return dataCompra;

@@ -5,7 +5,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import dao.ComputadorDAO;
 import model.Computador;
-import model.Gabinete;
+import submodelHardware.Gabinete;
 
 
 @Named

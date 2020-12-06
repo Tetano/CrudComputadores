@@ -1,4 +1,4 @@
-package model;
+package submodelHardware;
 
 public enum Gabinete {
 	E_ATX(1,"E-ATX"),
