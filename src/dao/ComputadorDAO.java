@@ -12,19 +12,17 @@ import application.Util;
 import model.Computador;
 import submodelHardware.Gabinete;
 
-
 public class ComputadorDAO implements DAO<Computador> {
 	// Para implementar o DAO genêrico utilize implements DAO<ClasseDesejada>
-	
-	
+
 // A ideia do dao é organziar e separar a camada de modelo do controlador
 	// é preferencialmente feita para reutilização.
 	@Override
 	public void inserir(Computador obj) throws Exception { // Ainda estou inserindo computador
 		Connection conn = DAO.getConnection();
-		
+
 		Exception exception = null;
-		
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO ");
 		sql.append("computador ");
@@ -32,32 +30,27 @@ public class ComputadorDAO implements DAO<Computador> {
 		sql.append("VALUES ");
 		sql.append("  ( ?, ?, ?, ?, ?, ?, ?, ?) ");
 		PreparedStatement stat = null;
-		
-		
+
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
 			stat.setString(1, obj.getCpf()); // Usa o get para definir o nome
 			stat.setString(2, obj.getPlacaMae());
-			stat.setString(3, obj.getProcessador()); 
-			stat.setString(4, obj.getPlacaDeVideo());		// Usa o get para definir o nome
+			stat.setString(3, obj.getProcessador());
+			stat.setString(4, obj.getPlacaDeVideo()); // Usa o get para definir o nome
 			stat.setString(5, obj.getMemoria());
 			stat.setString(6, obj.getFonte());
-			if(obj.getGabinete() == null) {
+			if (obj.getGabinete() == null) {
 				return;
 			}
 			stat.setInt(7, obj.getGabinete().getId());
-			
-			//Convertendo um Obj LocalDate para SQLDate
-			stat.setDate(8, obj.getDataCompra() == null ? null: Date.valueOf(obj.getDataCompra()));
-			
 
-			
+			// Convertendo um Obj LocalDate para SQLDate
+			stat.setDate(8, obj.getDataCompra() == null ? null : Date.valueOf(obj.getDataCompra()));
 
 			stat.execute();
 			// efetivando a transacao
 			conn.commit();
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,18 +78,18 @@ public class ComputadorDAO implements DAO<Computador> {
 				e.printStackTrace();
 			}
 		}
-		
-		if(exception != null)
+
+		if (exception != null)
 			throw exception;
 
 	}
 
 	@Override
 	public void alterar(Computador obj) throws Exception {
-Connection conn = DAO.getConnection();
-		
+		Connection conn = DAO.getConnection();
+
 		Exception exception = null;
-		
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE computador SET ");
 		sql.append(" cpf = ?, ");
@@ -109,33 +102,29 @@ Connection conn = DAO.getConnection();
 		sql.append(" data_compra = ? ");
 		sql.append("WHERE ");
 		sql.append(" id = ? ");
-		
-		
+
 		PreparedStatement stat = null;
-		
+
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
 			stat.setString(1, obj.getCpf()); // Usa o get para definir o nome
 			stat.setString(2, obj.getPlacaMae());
-			stat.setString(3, obj.getProcessador()); 
-			stat.setString(4, obj.getPlacaDeVideo());		// Usa o get para definir o nome
+			stat.setString(3, obj.getProcessador());
+			stat.setString(4, obj.getPlacaDeVideo()); // Usa o get para definir o nome
 			stat.setString(5, obj.getMemoria());
 			stat.setString(6, obj.getFonte());
-			if(obj.getGabinete() == null) {
+			if (obj.getGabinete() == null) {
 				return;
 			}
 			stat.setInt(7, obj.getGabinete().getId());
-			
-			stat.setDate(8, obj.getDataCompra() == null ? null: Date.valueOf(obj.getDataCompra()));
-			
-			stat.setInt(9, obj.getId());
 
-			
+			stat.setDate(8, obj.getDataCompra() == null ? null : Date.valueOf(obj.getDataCompra()));
+
+			stat.setInt(9, obj.getId());
 
 			stat.execute();
 			conn.commit();
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,26 +155,23 @@ Connection conn = DAO.getConnection();
 
 			}
 		}
-		if(exception != null)
+		if (exception != null)
 			throw exception;
-
-	
 
 	}
 
 	@Override
 	public void excluir(Computador obj) throws Exception {
 		// TODO Auto-generated method stub
-Connection conn = DAO.getConnection();
-		
+		Connection conn = DAO.getConnection();
+
 		Exception exception = null;
-		
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM computador WHERE id = ?");
-		
-		
+
 		PreparedStatement stat = null;
-		
+
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
@@ -194,7 +180,6 @@ Connection conn = DAO.getConnection();
 			stat.execute();
 			conn.commit();
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// cancelando a transacao
@@ -224,12 +209,9 @@ Connection conn = DAO.getConnection();
 
 			}
 		}
-		if(exception != null)
+		if (exception != null)
 			throw exception;
 
-	
-
-		
 	}
 
 	@Override
@@ -237,11 +219,11 @@ Connection conn = DAO.getConnection();
 		Exception exception = null;
 		Connection conn = DAO.getConnection();
 		List<Computador> listaComputador = new ArrayList<Computador>();
-	
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		//sql.append("  c.*, "); -> Uso do * pode ser viável quando não há necessidade de retornar um elemento em específico.
+		// sql.append(" c.*, "); -> Uso do * pode ser viável quando não há necessidade
+		// de retornar um elemento em específico.
 		sql.append("  c.id, ");
 		sql.append(" c.gabinete, ");
 		sql.append(" c.cpf, ");
@@ -256,28 +238,29 @@ Connection conn = DAO.getConnection();
 		sql.append("ORDER BY c.id ");
 		PreparedStatement stat = null;
 		try {
-			
+
 			stat = conn.prepareStatement(sql.toString());
 			ResultSet rs = stat.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Computador computador = new Computador();
+				
 				computador.setId(rs.getInt("id"));
-				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete"))); 				
+				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete")));
 				computador.setCpf(rs.getString("cpf"));
 				computador.setProcessador(rs.getString("processador"));
 				computador.setPlacaMae(rs.getString("placa_mae"));
 				computador.setPlacaDeVideo(rs.getString("placa_video"));
 				computador.setMemoria(rs.getString("memoria"));
 				computador.setFonte(rs.getString("fonte"));
+				
 				Date data = rs.getDate("data_compra");
 				computador.setDataCompra(data == null ? null : data.toLocalDate());
-				
 
 				listaComputador.add(computador);
-		
+
 			}
-			
+
 		} catch (SQLException e) {
 			Util.addMessage("Não foi possível buscar os dados");
 			e.printStackTrace();
@@ -302,60 +285,62 @@ Connection conn = DAO.getConnection();
 				e.printStackTrace();
 			}
 		}
-		if(exception != null)
+		if (exception != null)
 			throw exception;
 		return listaComputador;
 	}
 
 	@Override
 	public Computador obterUm(Computador obj) throws Exception {
+		// TODO Auto-generated method stub
 		Exception exception = null;
 		Connection conn = DAO.getConnection();
-		
+
 		Computador computador = null;
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		//sql.append("  c.*, "); -> Uso do * pode ser viável quando não há necessidade de retornar um elemento em específico.
-		sql.append("  c.id, ");
-		sql.append(" c.gabinete, ");
-		sql.append(" c.cpf, ");
-		sql.append(" c.placa_mae, ");
-		sql.append(" c.processador, ");
-		sql.append(" c.placa_video, ");
-		sql.append(" c.memoria, ");
-		sql.append(" c.fonte, ");
-		sql.append(" c.data_compra ");
+		// sql.append(" c.*, "); -> Uso do * pode ser viável quando não há necessidade
+		// de retornar um elemento em específico.
+		sql.append("  computador.id, ");
+		sql.append(" computador.gabinete, ");
+		sql.append(" computador.cpf, ");
+		sql.append(" computador.placa_mae, ");
+		sql.append(" computador.processador, ");
+		sql.append(" computador.placa_video, ");
+		sql.append(" computador.memoria, ");
+		sql.append(" computador.fonte, ");
+		sql.append(" computador.data_compra ");
 		sql.append("FROM ");
-		sql.append("  computador c ");
-		sql.append("ORDER BY c.id ");
-		
+		sql.append("  computador ");
+		sql.append("WHERE computador.id = ? ");
+
 		PreparedStatement stat = null;
+		conn.setAutoCommit(false);
 		try {
-
 			stat = conn.prepareStatement(sql.toString());
-
-
+			stat.setInt(1, obj.getId());
+			
 			ResultSet rs = stat.executeQuery();
-
-			if (rs.next()) {
+			
+			while(rs.next()) {
 				computador = new Computador();
 				computador.setId(rs.getInt("id"));
-				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete"))); 				
-				computador.setCpf(rs.getString("cpf"));
+				Date data = rs.getDate("data_compra");
+				computador.setDataCompra(data == null ? null: data.toLocalDate());
+				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete")));
 				computador.setProcessador(rs.getString("processador"));
 				computador.setPlacaMae(rs.getString("placa_mae"));
 				computador.setPlacaDeVideo(rs.getString("placa_video"));
 				computador.setMemoria(rs.getString("memoria"));
 				computador.setFonte(rs.getString("fonte"));
-				Date data = rs.getDate("data_compra");
-				computador.setDataCompra(data == null ? null : data.toLocalDate());
+				computador.setCpf(rs.getString("cpf"));
 			}
-
+			
 		} catch (SQLException e) {
-			Util.addMessage("Não foi possivel buscar os dados do Computador.");
+			Util.addMessage("Não foi possivel buscar os dados do usuario.");
 			e.printStackTrace();
-			exception = new Exception("Erro ao executar um sql em ComputadorDAO.");
+			exception = new Exception("Erro ao executar um sql em UsuarioDAO.");
 		} finally {
 			try {
 				if (!stat.isClosed())
@@ -376,8 +361,5 @@ Connection conn = DAO.getConnection();
 
 		return computador;
 	}
-
-
-
 
 }

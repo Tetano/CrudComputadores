@@ -17,12 +17,10 @@ public class ComputadorController extends Controller<Computador> implements Seri
 	
 	public ComputadorController() {
 		super(new ComputadorDAO());
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Computador getEntity() {
-		// TODO Auto-generated method stub
 		if(entity == null) 
 			entity = new Computador();
 			return entity;
