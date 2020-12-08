@@ -16,18 +16,45 @@ Estudar:
 </h:head>
 
 <h:body>
-	<ui:insert name="cabecalho">
-	<h1>Cabeçalho</h1>
-	</ui:insert>
-	
-		<ui:insert name="conteudo">
-	 teste
-	</ui:insert>
-	
-		<ui:insert name="rodape">
-	<h1>Rodapé</h1>
-	</ui:insert>
-	
+	 <div>
+	 	<div>
+			<h1 >.: EMídia :.</h1>
+			<div >
+				<h:form rendered="#{templateController.usuarioLogado != null}"> 
+					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
+					<h:commandLink value=" (Sair)"   
+						action="#{templateController.encerrarSessao}"
+						style="color:white"/>
+				</h:form>
+			</div>
+	 	</div>
+		<div>
+			<ui:insert name="menu">
+				<h1>Menu</h1>
+				<h:form>
+					<h:commandLink value="Login" action="LoginPage.html"/>
+					<h:commandLink value="Cadastro de Usuário" action="usuario.xhtml?faces-redirect=true"/> 
+					<h:commandLink value="Cadastro de Mídia" /> 
+					<h:commandLink value="Vendas"/>
+					<h:commandLink value="Carrinho" />
+
+				</h:form>
+			</ui:insert>
+		</div>
+		<div class="box content">
+			<br/>
+			<ui:insert name="conteudo">
+				<div align="center">
+					<h1>Teste</h1>
+				</div>
+			</ui:insert>
+		</div>
+		<div style="text-align: center;">
+			<h:outputText value="Vinitech, a tecnologia ao seu alcance" />
+			<a href="https://www.instagram.com/vinitechh/">Contato Instagram</a>
+			
+		</div>
+	</div>
 </h:body>
 
 
