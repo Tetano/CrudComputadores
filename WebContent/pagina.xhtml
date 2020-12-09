@@ -5,44 +5,48 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-				
+
 <!-- 
 Estudar:
  - Insert, Composition, Define, Component, Debug, Decorate, Fragment, Include, Param, Remove, Repeat.
  -->
 <h:head>
+
 	<title>Página!</title>
-	<link type="text/css" rel="stylesheet" href="main.css" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
 </h:head>
 
 <h:body>
-	 <div>
-	 	<div>
-			<h1 >.: EMídia :.</h1>
-			<div >
-				<h:form rendered="#{templateController.usuarioLogado != null}"> 
-					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
-					<h:commandLink value=" (Sair)"   
-						action="#{templateController.encerrarSessao}"
-						style="color:white"/>
+	<div>
+		<div>
+			<h1>.: EMídia :.</h1>
+			<div>
+				<h:form rendered="#{templateController.usuarioLogado != null}">
+					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}" />
+					<h:commandLink value=" (Sair)"
+						action="#{templateController.encerrarSessao}" style="color:white" />
 				</h:form>
 			</div>
-	 	</div>
+		</div>
 		<div>
 			<ui:insert name="menu">
 				<h1>Menu</h1>
 				<h:form>
-					<h:commandLink value="Login" action="LoginPage.html"/>
-					<h:commandLink value="Cadastro de Usuário" action="usuario.xhtml?faces-redirect=true"/> 
-					<h:commandLink value="Cadastro de Mídia" /> 
-					<h:commandLink value="Vendas"/>
+					<h:commandLink value="Login" action="LoginPage.html" />
+					<h:commandLink value="Cadastro de Usuário"
+						action="usuario.xhtml?faces-redirect=true" />
+					<h:commandLink value="Cadastro de Mídia" />
+					<h:commandLink value="Vendas" />
 					<h:commandLink value="Carrinho" />
 
 				</h:form>
 			</ui:insert>
 		</div>
 		<div class="box content">
-			<br/>
+			<br />
 			<ui:insert name="conteudo">
 				<div align="center">
 					<h1>Teste</h1>
@@ -52,7 +56,7 @@ Estudar:
 		<div style="text-align: center;">
 			<h:outputText value="Vinitech, a tecnologia ao seu alcance" />
 			<a href="https://www.instagram.com/vinitechh/">Contato Instagram</a>
-			
+
 		</div>
 	</div>
 </h:body>
