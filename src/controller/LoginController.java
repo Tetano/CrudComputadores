@@ -1,11 +1,18 @@
 package controller;
 
+import java.io.Serializable;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
 import application.Session;
 import application.Util;
+import dao.DAO;
 import dao.UsuarioDAO;
 import model.Usuario;
 
-
+@Named
+@RequestScoped
 public class LoginController {
 	
 	private Usuario usuario;
@@ -42,5 +49,8 @@ private Usuario getUsuario() {
 public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
 }
+
+
+
 
 }
