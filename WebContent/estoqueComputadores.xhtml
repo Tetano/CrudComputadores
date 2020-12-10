@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/pagina.xhtml">
+
+	<!-- Usando o pagina.xhtml e aproveitando o conteúdo da página show computadores -->
+
+	<ui:define name="conteudo">
+		<div class="container">
+			<div class="box">
+				<h1>Gerênciar Estoque De Computadores</h1>
+				<h:form>
+					<h:panelGrid columns="2">
+						<h:messages styleClass="messages" style="font-size: large" />
+						<div class="divtop">
+
+							<h:panelGroup>
+								<h:outputLabel value="Placa Mãe"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.placaMae}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="type" value="text" />
+									<f:passThroughAttribute name="placeholder" value="Placa mãe" />
+								</h:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputLabel value="Processador"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.processador}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder" value="Processador" />
+								</h:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputLabel value="Placa de Vídeo"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.placaDeVideo}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder"
+										value="Placa de Vídeo" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:outputLabel value="Memória Ram"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.memoria}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder" value="Memória" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+
+							<h:panelGroup>
+								<h:outputLabel value="Fonte"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.fonte}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder" value="Fonte" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:outputLabel value="Data da Montagem"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.dataMontagem}"
+									styleClass="inputkind2">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									<f:passThroughAttribute name="placeholder" value="00/00/0000" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:outputLabel value="Estoque"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.estoque}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder" value="Estoque" />
+								</h:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+
+								<h:outputLabel value="Preço R$"></h:outputLabel>
+								<br />
+								<h:inputText value="#{computadorController.entity.preco}">
+									<f:passThroughAttribute name="placeholder" value="Preço" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+
+							<h:panelGroup>
+								<h:outputLabel value="Tamanho do gabinete   " />
+								<h:selectOneMenu value="#{computadorController.entity.gabinete}">
+									<f:selectItem itemLabel="Selecione..." />
+									<f:selectItems value="#{computadorController.listaGabinete}"
+										var="objeto" itemLabel="#{objeto.label}" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+
+
+
+
+
+
+						</div>
+					</h:panelGrid>
+
+					<div class="box2">
+
+						<h:dataTable styleClass="divleft" rows="8"
+							value="#{computadorController.listaEntity}" var="objeto">
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: white">Editor</h3>
+								</f:facet>
+								<h:commandLink styleClass="comandLink" value="Selecionar"
+									actionListener="#{computadorController.editar(objeto)}"></h:commandLink>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">ID</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca" value="#{objeto.id}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Placa Mãe</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca" value="#{objeto.placaMae}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Processador</h3>
+								</f:facet>
+								<h:outputText styleClass="black" value="#{objeto.processador}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Placa De Vídeo</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca"
+									value="#{objeto.placaDeVideo}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Memória</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca" value="#{objeto.memoria}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Fonte</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca"
+									value="#{objeto.fonte} Wats" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Gabinete</h3>
+								</f:facet>
+								<h:outputLabel value="#{objeto.gabinete.label}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Data da Montagem</h3>
+								</f:facet>
+								<h:outputLabel value="#{objeto.dataMontagem}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Preço</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca" value="R$ #{objeto.preco}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Estoque</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca"
+									value="#{objeto.estoque} UNID" />
+							</h:column>
+						</h:dataTable>
+					</div>
+
+
+
+					<div class="divBotoes">
+						<section class="container3 row">
+							<h:commandButton style="background:#FFF" styleClass="item"
+								value="Inserir"
+								actionListener="#{computadorController.incluir()}"
+								disabled="#{computadorController.entity.id != null}"></h:commandButton>
+							<h:commandButton style="background:#FFF" styleClass="item"
+								value="Alterar"
+								actionListener="#{computadorController.alterar()}"
+								disabled="#{computadorController.entity.id == null}"></h:commandButton>
+							<h:commandButton style="background:#FFF" styleClass="item"
+								value="Excluir"
+								actionListener="#{computadorController.excluir()}"
+								disabled="#{computadorController.entity.id == null}"></h:commandButton>
+							<h:commandButton style="background:#FFF" styleClass="item"
+								value="Limpar" actionListener="#{computadorController.limpar()}"
+								disabled="#{computadorController.entity.id == null}"></h:commandButton>
+						</section>
+					</div>
+				</h:form>
+			</div>
+		</div>
+
+	</ui:define>
+
+
+</ui:composition>
+<!-- 
+Estudar:
+ - Insert, Composition, Define, Component, Debug, Decorate, Fragment, Include, Param, Remove, Repeat.
+ -->
+
+<!-- Insert: Especifica a área do template que poderá ser alterada por páginas que utilizarem este template -->
+<h:head>
+	<title>Hello, World!</title>
+	<link type="text/css" rel="stylesheet" href="main.css" />
+
+</h:head>
+
+</html>

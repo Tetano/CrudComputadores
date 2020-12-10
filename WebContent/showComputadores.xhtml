@@ -12,209 +12,52 @@
 	<ui:define name="conteudo">
 		<div class="container">
 			<div class="box">
-				<h1>Monte Sua Máquina</h1>
-				<h:form>
-					<h:panelGrid columns="2">
-						<h:messages styleClass="messages" style="font-size: large" />
-						<div class="divtop">
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.placaMae}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="type" value="text" />
-									<f:passThroughAttribute name="placeholder" value="Placa mãe" />
-								</h:inputText>
-							</h:panelGroup>
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.processador}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder" value="Processador" />
-								</h:inputText>
-							</h:panelGroup>
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.placaDeVideo}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder"
-										value="Placa de Vídeo" />
-								</h:inputText>
-							</h:panelGroup>
-
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.memoria}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder" value="Memória" />
-								</h:inputText>
-							</h:panelGroup>
+				<h1>Escolha sua máquina</h1>
 
 
 
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.fonte}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder" value="Fonte" />
-								</h:inputText>
-							</h:panelGroup>
+				<h:dataTable  styleClass="divleft" style="display:inline-block" rows="8"
+					value="#{computadorController.listaEntity}" var="objeto">
 
+					<h:column>
+						
+						<div class="card" style="width: 18rem">
+							<img class="card-img-top"
+								src="https://www.imgeletro.com.br/900x900/produto/marketplace_5df92597d8d360.94304636.jpg"
+								alt="Card image cap"></img>
+							<div class="card-body">
 
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.dataMontagem}"
-									styleClass="inputkind2">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									<f:passThroughAttribute name="placeholder" value="00/00/0000" />
-								</h:inputText>
-							</h:panelGroup>
+								<h:outputLabel value="Computador Intermediario"></h:outputLabel>
+								<h:outputLabel>Placa Mãe</h:outputLabel>
+								<h:outputText value="#{objeto.placaMae}"></h:outputText>
+								<br />
+								<h:outputLabel>Processador</h:outputLabel>
+								<h:outputText value="#{objeto.processador}"></h:outputText>
+								<br />
+								<h:outputLabel>Placa De Vídeo</h:outputLabel>
+								<h:outputText value="#{objeto.placaDeVideo}"></h:outputText>
+								<br />
+								<h:outputLabel>Valor A Vista:</h:outputLabel>
+								<h:outputText value="  R$ #{objeto.preco}"></h:outputText>
+								<br />
+								<h:commandButton
+									actionListener="#{computadorController.editar(objeto)}"
+									value="Adicionar Ao Carrinho" style="btn btn-primary"></h:commandButton>
 
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.estoque}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder" value="Estoque" />
-								</h:inputText>
-							</h:panelGroup>
-
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.preco}">
-									<f:passThroughAttribute name="placeholder" value="Preço" />
-								</h:inputText>
-							</h:panelGroup>
-
-
-
-							<h:panelGroup>
-								<h:outputLabel value="Tamanho do gabinete   " />
-								<h:selectOneMenu value="#{computadorController.entity.gabinete}">
-									<f:selectItem itemLabel="Selecione..." />
-									<f:selectItems value="#{computadorController.listaGabinete}"
-										var="objeto" itemLabel="#{objeto.label}" />
-								</h:selectOneMenu>
-							</h:panelGroup>
-
-
-
-
-
-
+							</div>
 						</div>
-					</h:panelGrid>
 
-					<div class="box2">
-
-						<h:dataTable styleClass="divleft" rows="8"
-							value="#{computadorController.listaEntity}" var="objeto">
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: white">Editor</h3>
-								</f:facet>
-								<h:commandLink styleClass="comandLink" value="Selecionar"
-									actionListener="#{computadorController.editar(objeto)}"></h:commandLink>
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">ID</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca" value="#{objeto.id}" />
-							</h:column>
+					</h:column>
+						
 
 
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Placa Mãe</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca" value="#{objeto.placaMae}" />
-							</h:column>
-
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Processador</h3>
-								</f:facet>
-								<h:outputText styleClass="black" value="#{objeto.processador}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Placa De Vídeo</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca"
-									value="#{objeto.placaDeVideo}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Memória</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca" value="#{objeto.memoria}" />
-							</h:column>
-
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Fonte</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca"
-									value="#{objeto.fonte} Wats" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Gabinete</h3>
-								</f:facet>
-								<h:outputLabel value="#{objeto.gabinete.label}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Data da Montagem</h3>
-								</f:facet>
-								<h:outputLabel value="#{objeto.dataMontagem}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Preço</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca"
-									value="R$ #{objeto.preco}" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">Estoque</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca"
-									value="#{objeto.estoque} UNID" />
-							</h:column>
-						</h:dataTable>
-					</div>
-
-
-
-					<div class="divBotoes">
-						<section class="container3 row">
-							<h:commandButton style="background:#FFF" styleClass="item"
-								value="Inserir"
-								actionListener="#{computadorController.incluir()}"
-								disabled="#{computadorController.entity.id != null}"></h:commandButton>
-							<h:commandButton style="background:#FFF" styleClass="item"
-								value="Alterar"
-								actionListener="#{computadorController.alterar()}"
-								disabled="#{computadorController.entity.id == null}"></h:commandButton>
-							<h:commandButton style="background:#FFF" styleClass="item"
-								value="Excluir"
-								actionListener="#{computadorController.excluir()}"
-								disabled="#{computadorController.entity.id == null}"></h:commandButton>
-							<h:commandButton style="background:#FFF" styleClass="item"
-								value="Limpar" actionListener="#{computadorController.limpar()}"
-								disabled="#{computadorController.entity.id == null}"></h:commandButton>
-						</section>
-					</div>
-				</h:form>
+				</h:dataTable>
 			</div>
+
+
+
 		</div>
+
 
 	</ui:define>
 

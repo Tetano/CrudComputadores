@@ -6,16 +6,17 @@
 <ui:composition template="/pagina.xhtml">
 	<ui:define name="conteudo">
 		<h:form>
-
+		<div class="customcenter">
 			<h:outputLabel value="E-mail"/>
 		<h:inputText value="#{loginController.usuario.email}"/>
-		
+			<br/>
 				<h:outputLabel value="Senha"/>
 		<h:inputText value="#{loginController.usuario.senha}"/>
+			<br/>
 
 	
 		<h:commandButton value="Login" class="btn btn-primary" action="#{loginController.logar()}"></h:commandButton>
-		
+		</div>
 
 		</h:form>
 	</ui:define>

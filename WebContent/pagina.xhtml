@@ -14,6 +14,7 @@ Estudar:
 
 	<title>Página!</title>
 	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<link type="text/css" rel="stylesheet" href="PrincipalCss.css" />
 	<meta charset="utf-8" name="viewport"
 		content="width=device-width, initial-scale=1"
 		http-equiv="X-UA-Conpatible" />
@@ -21,35 +22,32 @@ Estudar:
 
 <h:body>
 	<div>
-		<div>
-			<h1>ViniTech</h1>
-			<div>
-				<h:form rendered="#{pageController.usuarioLogado != null}">
+		
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<h:form rendered="#{pageController.usuarioLogado != null}">
 					<h:outputLabel value="Olá #{pageController.usuarioLogado.nome}" />
 					<h:commandButton value="Sair" actionListener="#{pageController.encerrarSessao}"></h:commandButton>
 				</h:form>
-			</div>
-		</div>
-		<div>
-			<ui:insert name="menu">
-				<h1>Menu</h1>
-				<h:form>
-					<h:commandLink value="Login" action="LoginPage" />
-					<h:commandLink value="Cadastro de Usuário" action="resgisterUser" />
-					<h:commandLink value="Monte seu computador"
-						action="showComputadores" />
-					<h:commandLink value="Vendas" />
-					<h:commandLink value="Carrinho" />
-					<h:button type="button" class="btn btn-primary" value="Botão"></h:button>
-
+				<h:form rendered="#{pageController.usuarioLogado == null}">
+					<h:commandLink styleClass="nav-link" value="Login" action="LoginPage"></h:commandLink>
+								<h:commandLink styleClass="nav-link" value="Produtos" action="showComputadores"></h:commandLink>
 				</h:form>
-			</ui:insert>
-		</div>
+				<h:form>
+						<br/>
+				<h:commandLink styleClass="nav-link" value="Cadastrar Computador" action="estoqueComputadores"></h:commandLink>
+				<h:commandLink styleClass="nav-link" value="Cadastrar Usuários" action="resgisterUser"></h:commandLink>
+				</h:form>
+
+
+</nav>
+		
+	
+
 		<div class="box content">
 			<br />
 			<ui:insert name="conteudo">
 				<div align="center">
-					<h1>Teste</h1>
+					<h1>Bem vindo!</h1>
 				</div>
 			</ui:insert>
 		</div>
