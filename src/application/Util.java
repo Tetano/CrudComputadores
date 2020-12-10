@@ -18,6 +18,10 @@ public class Util {
 		
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(Util.hash("viniciusvicco@gmail.com"+"123456"));
+	}
+	
 	public static void redirect(String page) {
 		try {
 			FacesContext.getCurrentInstance()
@@ -28,6 +32,10 @@ public class Util {
 		}
 	}
 	public static String hash(String valor) {
+		return DigestUtils.sha256Hex(valor);
+	}
+	
+	public String hashSHA256(String valor) {
 		return DigestUtils.sha256Hex(valor);
 	}
 }

@@ -24,10 +24,9 @@ Estudar:
 		<div>
 			<h1>ViniTech</h1>
 			<div>
-				<h:form rendered="#{templateController.usuarioLogado != null}">
-					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}" />
-					<h:commandLink value=" (Sair)"
-						action="#{templateController.encerrarSessao}" style="color:white" />
+				<h:form rendered="#{pageController.usuarioLogado != null}">
+					<h:outputLabel value="Olá #{pageController.usuarioLogado.nome}" />
+					<h:commandButton value="Sair" actionListener="#{pageController.encerrarSessao}"></h:commandButton>
 				</h:form>
 			</div>
 		</div>
@@ -36,9 +35,9 @@ Estudar:
 				<h1>Menu</h1>
 				<h:form>
 					<h:commandLink value="Login" action="LoginPage" />
-					<h:commandLink value="Cadastro de Usuário"
-						action="resgisterUser" />
-					<h:commandLink value="Monte seu computador" action="showComputadores" />
+					<h:commandLink value="Cadastro de Usuário" action="resgisterUser" />
+					<h:commandLink value="Monte seu computador"
+						action="showComputadores" />
 					<h:commandLink value="Vendas" />
 					<h:commandLink value="Carrinho" />
 					<h:button type="button" class="btn btn-primary" value="Botão"></h:button>

@@ -36,7 +36,10 @@ public class UsuarioDAO implements DAO<Usuario> {
 			stat.setString(1, obj.getNome());
 			stat.setString(2, obj.getCpf());
 			stat.setString(3, obj.getEmail());
-			stat.setString(4, obj.getSenha());
+			
+			String curHash = customHahs(obj);
+			
+			stat.setString(4, curHash);
 			// ternario java
 			stat.setObject(5, (obj.getSexo() == null ? null : obj.getSexo().getId()));
 			stat.setObject(6, (obj.getPerfil() == null ? null : obj.getPerfil().getId()));
@@ -90,6 +93,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 	public void alterar(Usuario obj) throws Exception {
 		Exception exception = null;
 		Connection conn = DAO.getConnection();
+		
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE usuario SET ");
@@ -422,6 +426,13 @@ public class UsuarioDAO implements DAO<Usuario> {
 			throw exception;
 
 		return usuario;
+	}
+	
+	String customHahs(Usuario obj) {
+		String hash = Util.hash(obj.getEmail()+obj.getSenha());
+		return hash;
+		//Tentei usar CPF não foi nem a pau String hash = String hash = Util.hash(obj.getCpf())+obj.getSenha());
+		
 	}
 
 

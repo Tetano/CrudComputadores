@@ -18,20 +18,20 @@ public class LoginController {
 	private Usuario usuario;
 
 	public void logar() {
-		
+
 		UsuarioDAO dao = new UsuarioDAO();
 		try {
-			Usuario usuarioLogado = 
-					dao.obterUsuario(getUsuario().getEmail(), getUsuario().getSenha());
-							
+			Usuario usuarioLogado = dao.obterUsuario(getUsuario().getEmail(), Util.hash(getUsuario().getEmail()+getUsuario().getSenha()));
+
 			if (usuarioLogado == null)
 				Util.addMessage("Usuário ou senha inválido.");
 			else {
+				Util.addMessage("Login Efetuado com sucesso!");
 				// Usuario existe com as credenciais
 				Session.getInstance().setAttribute("usuarioLogado", usuarioLogado);
 				Util.redirect("pagina.xhtml");
 			}
-				
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Util.addMessage("Problema ao verificar o Login. Entre em contato pelo email: contato@email.com.br");
