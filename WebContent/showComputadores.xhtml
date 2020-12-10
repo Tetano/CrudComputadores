@@ -34,25 +34,13 @@
 							</h:panelGroup>
 
 							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.cpf}"
+								<h:inputText value="#{computadorController.entity.placaDeVideo}"
 									styleClass="inputkind2">
 									<f:passThroughAttribute name="placeholder"
-										value="CPF: 000.000.000-00" />
-									<!-- 
-						
-										<f:validateLength maximum="11" minimum="11"></f:validateLength>
-										<f:validateRegex pattern="[0-9]{11}+"></f:validateRegex>
-										 -->
+										value="Placa de Vídeo" />
 								</h:inputText>
 							</h:panelGroup>
 
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.dataCompra}"
-									styleClass="inputkind2">
-									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-									<f:passThroughAttribute name="placeholder" value="00/00/0000" />
-								</h:inputText>
-							</h:panelGroup>
 
 							<h:panelGroup>
 								<h:inputText value="#{computadorController.entity.memoria}"
@@ -61,13 +49,7 @@
 								</h:inputText>
 							</h:panelGroup>
 
-							<h:panelGroup>
-								<h:inputText value="#{computadorController.entity.placaDeVideo}"
-									styleClass="inputkind2">
-									<f:passThroughAttribute name="placeholder"
-										value="Placa de Vídeo" />
-								</h:inputText>
-							</h:panelGroup>
+
 
 							<h:panelGroup>
 								<h:inputText value="#{computadorController.entity.fonte}"
@@ -75,6 +57,31 @@
 									<f:passThroughAttribute name="placeholder" value="Fonte" />
 								</h:inputText>
 							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:inputText value="#{computadorController.entity.dataMontagem}"
+									styleClass="inputkind2">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+									<f:passThroughAttribute name="placeholder" value="00/00/0000" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+							<h:panelGroup>
+								<h:inputText value="#{computadorController.entity.estoque}"
+									styleClass="inputkind2">
+									<f:passThroughAttribute name="placeholder" value="Estoque" />
+								</h:inputText>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:inputText value="#{computadorController.entity.preco}">
+									<f:passThroughAttribute name="placeholder" value="Preço" />
+								</h:inputText>
+							</h:panelGroup>
+
+
 
 							<h:panelGroup>
 								<h:outputLabel value="Tamanho do gabinete   " />
@@ -84,6 +91,10 @@
 										var="objeto" itemLabel="#{objeto.label}" />
 								</h:selectOneMenu>
 							</h:panelGroup>
+
+
+
+
 
 
 						</div>
@@ -109,12 +120,6 @@
 								<h:outputText styleClass="corBranca" value="#{objeto.id}" />
 							</h:column>
 
-							<h:column>
-								<f:facet name="header">
-									<h3 style="color: black">CPF</h3>
-								</f:facet>
-								<h:outputText styleClass="corBranca" value="#{objeto.cpf}" />
-							</h:column>
 
 							<h:column>
 								<f:facet name="header">
@@ -164,11 +169,25 @@
 
 							<h:column>
 								<f:facet name="header">
-									<h3 style="color: black">DataCompra</h3>
+									<h3 style="color: black">Data da Montagem</h3>
 								</f:facet>
-								<h:outputLabel value="#{objeto.dataCompra}" />
+								<h:outputLabel value="#{objeto.dataMontagem}" />
 							</h:column>
 
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Preço</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca"
+									value="R$ #{objeto.preco}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h3 style="color: black">Estoque</h3>
+								</f:facet>
+								<h:outputText styleClass="corBranca"
+									value="#{objeto.estoque} UNID" />
+							</h:column>
 						</h:dataTable>
 					</div>
 

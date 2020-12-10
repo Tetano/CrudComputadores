@@ -5,30 +5,33 @@ import java.time.LocalDate;
 import submodelHardware.Gabinete;
 
 public class Computador {
-	public LocalDate getDataCompra() {
-		return dataCompra;
-	}
-	public void setDataCompra(LocalDate dataCompra) {
-		this.dataCompra = dataCompra;
-	}
+
 	private Integer id;
-	private String cpf;
-	private LocalDate dataCompra;
 	private String placaMae;
+	private String processador;
 	private String placaDeVideo;
 	private String memoria;
-	private String processador;
 	private String fonte;
 	private Gabinete gabinete;
+	private LocalDate dataMontagem;
+	private double preco;
+	private Integer estoque;
 
 	
 	
 
-	public String getCpf() {
-		return cpf;
+
+	public double getPreco() {
+		return preco;
 	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setPreco(double preco) {
+		this.preco = preco;
+	}
+	public Integer getEstoque() {
+		return estoque;
+	}
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
 	}
 	public Integer getId() {
 		return id;
@@ -72,7 +75,12 @@ public class Computador {
 	public void setGabinete(Gabinete gabinete) {
 		this.gabinete = gabinete;
 	}
-
+	public LocalDate getDataMontagem() {
+		return dataMontagem;
+	}
+	public void setDataMontagem(LocalDate dataMontagem) {
+		this.dataMontagem = dataMontagem;
+	}
 
 
 

@@ -26,28 +26,28 @@ public class ComputadorDAO implements DAO<Computador> {
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO ");
 		sql.append("computador ");
-		sql.append("  (cpf, placa_mae, processador, placa_video, memoria, fonte, gabinete, data_compra) ");
+		sql.append("  (placa_mae, processador, placa_video, memoria, fonte, gabinete, data_montagem, preco, estoque) ");
 		sql.append("VALUES ");
-		sql.append("  ( ?, ?, ?, ?, ?, ?, ?, ?) ");
+		sql.append("  ( ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 		PreparedStatement stat = null;
 
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
-			stat.setString(1, obj.getCpf()); // Usa o get para definir o nome
-			stat.setString(2, obj.getPlacaMae());
-			stat.setString(3, obj.getProcessador());
-			stat.setString(4, obj.getPlacaDeVideo()); // Usa o get para definir o nome
-			stat.setString(5, obj.getMemoria());
-			stat.setString(6, obj.getFonte());
+			stat.setString(1, obj.getPlacaMae());
+			stat.setString(2, obj.getProcessador());
+			stat.setString(3, obj.getPlacaDeVideo()); // Usa o get para definir o nome
+			stat.setString(4, obj.getMemoria());
+			stat.setString(5, obj.getFonte());
 			if (obj.getGabinete() == null) {
 				return;
 			}
-			stat.setInt(7, obj.getGabinete().getId());
+			stat.setInt(6, obj.getGabinete().getId());
 
 			// Convertendo um Obj LocalDate para SQLDate
-			stat.setDate(8, obj.getDataCompra() == null ? null : Date.valueOf(obj.getDataCompra()));
-
+			stat.setDate(7, obj.getDataMontagem() == null ? null : Date.valueOf(obj.getDataMontagem()));
+			stat.setDouble(8, obj.getPreco());
+			stat.setInt(9, obj.getEstoque());
 			stat.execute();
 			// efetivando a transacao
 			conn.commit();
@@ -92,14 +92,15 @@ public class ComputadorDAO implements DAO<Computador> {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE computador SET ");
-		sql.append(" cpf = ?, ");
 		sql.append(" placa_mae = ?, ");
 		sql.append(" processador = ?, ");
 		sql.append(" placa_video = ?, ");
 		sql.append(" memoria = ?, ");
 		sql.append(" fonte = ?, ");
 		sql.append(" gabinete = ?, ");
-		sql.append(" data_compra = ? ");
+		sql.append(" data_montagem = ?, ");
+		sql.append(" preco = ?, ");
+		sql.append(" estoque = ? ");
 		sql.append("WHERE ");
 		sql.append(" id = ? ");
 
@@ -108,20 +109,19 @@ public class ComputadorDAO implements DAO<Computador> {
 		try {
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(sql.toString());
-			stat.setString(1, obj.getCpf()); // Usa o get para definir o nome
-			stat.setString(2, obj.getPlacaMae());
-			stat.setString(3, obj.getProcessador());
-			stat.setString(4, obj.getPlacaDeVideo()); // Usa o get para definir o nome
-			stat.setString(5, obj.getMemoria());
-			stat.setString(6, obj.getFonte());
+			stat.setString(1, obj.getPlacaMae());
+			stat.setString(2, obj.getProcessador());
+			stat.setString(3, obj.getPlacaDeVideo()); // Usa o get para definir o nome
+			stat.setString(4, obj.getMemoria());
+			stat.setString(5, obj.getFonte());
 			if (obj.getGabinete() == null) {
 				return;
 			}
-			stat.setInt(7, obj.getGabinete().getId());
-
-			stat.setDate(8, obj.getDataCompra() == null ? null : Date.valueOf(obj.getDataCompra()));
-
-			stat.setInt(9, obj.getId());
+			stat.setInt(6, obj.getGabinete().getId());
+			stat.setDate(7, obj.getDataMontagem() == null ? null : Date.valueOf(obj.getDataMontagem()));
+			stat.setDouble(8, obj.getPreco());
+			stat.setInt(9, obj.getEstoque());
+			stat.setInt(10, obj.getId());
 
 			stat.execute();
 			conn.commit();
@@ -226,13 +226,14 @@ public class ComputadorDAO implements DAO<Computador> {
 		// de retornar um elemento em específico.
 		sql.append("  c.id, ");
 		sql.append(" c.gabinete, ");
-		sql.append(" c.cpf, ");
 		sql.append(" c.placa_mae, ");
 		sql.append(" c.processador, ");
 		sql.append(" c.placa_video, ");
 		sql.append(" c.memoria, ");
 		sql.append(" c.fonte, ");
-		sql.append(" c.data_compra ");
+		sql.append(" c.data_montagem, ");
+		sql.append(" c.preco, ");
+		sql.append(" c.estoque ");
 		sql.append("FROM ");
 		sql.append("  computador c ");
 		sql.append("ORDER BY c.id ");
@@ -244,18 +245,18 @@ public class ComputadorDAO implements DAO<Computador> {
 
 			while (rs.next()) {
 				Computador computador = new Computador();
-				
+
 				computador.setId(rs.getInt("id"));
 				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete")));
-				computador.setCpf(rs.getString("cpf"));
 				computador.setProcessador(rs.getString("processador"));
 				computador.setPlacaMae(rs.getString("placa_mae"));
 				computador.setPlacaDeVideo(rs.getString("placa_video"));
 				computador.setMemoria(rs.getString("memoria"));
 				computador.setFonte(rs.getString("fonte"));
-				
-				Date data = rs.getDate("data_compra");
-				computador.setDataCompra(data == null ? null : data.toLocalDate());
+				computador.setPreco(rs.getDouble("preco"));
+				computador.setEstoque(rs.getInt("estoque"));
+				Date data = rs.getDate("data_montagem");
+				computador.setDataMontagem(data == null ? null : data.toLocalDate());
 
 				listaComputador.add(computador);
 
@@ -302,15 +303,16 @@ public class ComputadorDAO implements DAO<Computador> {
 		sql.append("SELECT ");
 		// sql.append(" c.*, "); -> Uso do * pode ser viável quando não há necessidade
 		// de retornar um elemento em específico.
-		sql.append("  computador.id, ");
-		sql.append(" computador.gabinete, ");
-		sql.append(" computador.cpf, ");
-		sql.append(" computador.placa_mae, ");
-		sql.append(" computador.processador, ");
-		sql.append(" computador.placa_video, ");
-		sql.append(" computador.memoria, ");
-		sql.append(" computador.fonte, ");
-		sql.append(" computador.data_compra ");
+		sql.append("  id, ");
+		sql.append(" gabinete, ");
+		sql.append(" placa_mae, ");
+		sql.append(" processador, ");
+		sql.append(" placa_video, ");
+		sql.append(" memoria, ");
+		sql.append(" fonte, ");
+		sql.append(" data_montagem, ");
+		sql.append(" preco, ");
+		sql.append(" estoque ");
 		sql.append("FROM ");
 		sql.append("  computador ");
 		sql.append("WHERE computador.id = ? ");
@@ -320,23 +322,25 @@ public class ComputadorDAO implements DAO<Computador> {
 		try {
 			stat = conn.prepareStatement(sql.toString());
 			stat.setInt(1, obj.getId());
-			
+
 			ResultSet rs = stat.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				computador = new Computador();
 				computador.setId(rs.getInt("id"));
-				Date data = rs.getDate("data_compra");
-				computador.setDataCompra(data == null ? null: data.toLocalDate());
+				Date data = rs.getDate("data_montagem");
+				computador.setDataMontagem(data == null ? null : data.toLocalDate());
 				computador.setGabinete(Gabinete.valueOf(rs.getInt("gabinete")));
 				computador.setProcessador(rs.getString("processador"));
 				computador.setPlacaMae(rs.getString("placa_mae"));
 				computador.setPlacaDeVideo(rs.getString("placa_video"));
 				computador.setMemoria(rs.getString("memoria"));
 				computador.setFonte(rs.getString("fonte"));
-				computador.setCpf(rs.getString("cpf"));
+				computador.setEstoque(rs.getInt("estoque"));
+				computador.setPreco(rs.getDouble("preco"));
+
 			}
-			
+
 		} catch (SQLException e) {
 			Util.addMessage("Não foi possivel buscar os dados do usuario.");
 			e.printStackTrace();
