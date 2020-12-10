@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
 public class Usuario implements Cloneable {
 
 	private Integer id;

@@ -14,23 +14,22 @@ import model.Usuario;
 @Named
 @RequestScoped
 public class LoginController {
-	
+
 	private Usuario usuario;
-	
-	
-public void logar() {
+
+	public void logar() {
 		
 		UsuarioDAO dao = new UsuarioDAO();
 		try {
 			Usuario usuarioLogado = 
-					dao.obterUsuario(getUsuario().getEmail(), 
-							Util.hash(getUsuario().getEmail()+getUsuario().getSenha()));
+					dao.obterUsuario(getUsuario().getEmail(), getUsuario().getSenha());
+							
 			if (usuarioLogado == null)
 				Util.addMessage("Usuário ou senha inválido.");
 			else {
 				// Usuario existe com as credenciais
 				Session.getInstance().setAttribute("usuarioLogado", usuarioLogado);
-				Util.redirect("template.xhtml");
+				Util.redirect("pagina.xhtml");
 			}
 				
 		} catch (Exception e) {
@@ -39,18 +38,14 @@ public void logar() {
 		}
 	}
 
+	public Usuario getUsuario() {
+		if (usuario == null)
+			usuario = new Usuario();
+		return usuario;
+	}
 
-private Usuario getUsuario() {
-	// TODO Auto-generated method stub
-	if (usuario == null)
-		usuario = new Usuario();
-	return usuario;
-}
-public void setUsuario(Usuario usuario) {
-	this.usuario = usuario;
-}
-
-
-
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

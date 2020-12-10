@@ -22,7 +22,7 @@ Estudar:
 <h:body>
 	<div>
 		<div>
-			<h1>  ViniTech</h1>
+			<h1>ViniTech</h1>
 			<div>
 				<h:form rendered="#{templateController.usuarioLogado != null}">
 					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}" />
@@ -35,10 +35,10 @@ Estudar:
 			<ui:insert name="menu">
 				<h1>Menu</h1>
 				<h:form>
-					<h:commandLink value="Login" action="LoginPage.xhtml" />
+					<h:commandLink value="Login" action="LoginPage" />
 					<h:commandLink value="Cadastro de Usuário"
-						action="usuario.xhtml?faces-redirect=true" />
-					<h:commandLink value="Cadastro de Mídia" />
+						action="resgisterUser" />
+					<h:commandLink value="Monte seu computador" action="showComputadores" />
 					<h:commandLink value="Vendas" />
 					<h:commandLink value="Carrinho" />
 					<h:button type="button" class="btn btn-primary" value="Botão"></h:button>
@@ -56,7 +56,8 @@ Estudar:
 		</div>
 		<div style="text-align: center;">
 			<h:outputText value="Vinitech, a tecnologia ao seu alcance" />
-			<a href="https://www.instagram.com/vinitechh/">Acesse aqui nosso contato no Instagram</a>
+			<a href="https://www.instagram.com/vinitechh/">Acesse aqui nosso
+				contato no Instagram</a>
 
 		</div>
 	</div>
